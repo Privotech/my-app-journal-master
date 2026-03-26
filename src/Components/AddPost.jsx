@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import usePosts from '../usePosts';
 
 const AddPost = () => {
   const { addPost } = usePosts();
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState(null);
@@ -20,13 +22,19 @@ const AddPost = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    addPost({ title, content, image });
-    setTitle('');
-    setContent('');
-    setImage(null);
-    setImagePreview(null);
+    const success = await addPost({ title, content, image });
+    if (success) {
+      setTitle('');
+      setContent('');
+      setImage(null);
+      setImagePreview(null);
+      // Redirect to home page after adding post
+      navigate('/');
+    } else {
+      alert('Failed to add post. Please try again.');
+    }
   };
 
   return (

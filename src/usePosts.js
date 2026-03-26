@@ -50,9 +50,15 @@ const usePosts = () => {
           newPost.imageUrl = `http://localhost:5001${newPost.imageUrl}`;
         }
         setPosts([newPost, ...posts]);
+        console.log('Post added successfully:', newPost);
+        return true;
+      } else {
+        console.error('Failed to add post:', response.statusText);
+        return false;
       }
     } catch (error) {
       console.error('Error adding post:', error);
+      return false;
     } finally {
       setLoading(false);
     }
