@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../useAuth';
 
 const ForgotPassword = () => {
@@ -7,7 +7,6 @@ const ForgotPassword = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const { forgotPassword } = useAuth();
 
   const handleSubmit = async (e) => {
@@ -20,8 +19,6 @@ const ForgotPassword = () => {
       const result = await forgotPassword(email);
       if (result.success) {
         setMessage('Password reset instructions have been sent to your email.');
-        // In a real app, you'd show the token or redirect to reset page
-        // For demo, we'll show the token
       }
     } catch (err) {
       setError('Failed to send reset instructions. Please check your email.');

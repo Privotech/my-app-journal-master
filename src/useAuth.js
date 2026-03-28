@@ -85,7 +85,7 @@ export const useAuth = () => {
       const data = await response.json();
       
       if (response.ok) {
-        console.log('Reset token:', data.resetToken); // For demo purposes
+        console.log('Reset token:', data.resetToken);
         return { success: true, token: data.resetToken };
       } else {
         console.error('Forgot password failed:', data.message);

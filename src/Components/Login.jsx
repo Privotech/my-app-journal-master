@@ -16,11 +16,17 @@ const Login = () => {
     setLoading(true);
 
     try {
+      console.log('Attempting login with:', email);
       const success = await login(email, password);
+      console.log('Login success:', success);
       if (success) {
-        navigate('/');
+        console.log('Navigating to /home');
+        navigate('/home');
+      } else {
+        setError('Login failed. Please check your credentials.');
       }
     } catch (err) {
+      console.error('Login error:', err);
       setError('Login failed. Please check your credentials.');
     } finally {
       setLoading(false);

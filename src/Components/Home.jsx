@@ -20,7 +20,7 @@ const Home = () => {
     if (searchTerm) {
       const filteredSuggestions = posts
         .filter(post => post.title.toLowerCase().startsWith(searchTerm.toLowerCase()))
-        .slice(0, 5);  // Limit to 5 suggestions
+        .slice(0, 5); 
       setSuggestions(filteredSuggestions);
     } else {
       setSuggestions([]);

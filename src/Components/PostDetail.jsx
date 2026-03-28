@@ -14,7 +14,6 @@ const PostDetail = () => {
         const response = await fetch(`${API_BASE_URL}/posts/${id}`);
         if (response.ok) {
           const data = await response.json();
-          // Fix image URL to include full backend URL
           if (data.imageUrl) {
             data.imageUrl = `http://localhost:5001${data.imageUrl}`;
           }

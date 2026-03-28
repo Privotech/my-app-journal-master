@@ -15,7 +15,6 @@ const usePosts = () => {
       setLoading(true);
       const response = await fetch(`${API_BASE_URL}/posts`);
       const data = await response.json();
-      // Fix image URLs to include full backend URL
       const postsWithFullUrls = data.map(post => ({
         ...post,
         imageUrl: post.imageUrl ? `http://localhost:5001${post.imageUrl}` : ''
@@ -31,11 +30,18 @@ const usePosts = () => {
   const addPost = async (post) => {
     try {
       setLoading(true);
+      console.log('Adding post with data:', { title: post.title, content: post.content, hasImage: !!post.image });
+      
       const formData = new FormData();
       formData.append('title', post.title);
       formData.append('content', post.content);
       if (post.image) {
         formData.append('image', post.image);
+        console.log('Image file details:', {
+          name: post.image.name,
+          size: post.image.size,
+          type: post.image.type
+        });
       }
 
       const response = await fetch(`${API_BASE_URL}/posts`, {
@@ -43,9 +49,11 @@ const usePosts = () => {
         body: formData,
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
+
       if (response.ok) {
         const newPost = await response.json();
-        // Fix image URL to include full backend URL
         if (newPost.imageUrl) {
           newPost.imageUrl = `http://localhost:5001${newPost.imageUrl}`;
         }
@@ -53,7 +61,9 @@ const usePosts = () => {
         console.log('Post added successfully:', newPost);
         return true;
       } else {
-        console.error('Failed to add post:', response.statusText);
+        const errorText = await response.text();
+        console.error('Failed to add post. Status:', response.status);
+        console.error('Error response:', errorText);
         return false;
       }
     } catch (error) {
@@ -98,7 +108,6 @@ const usePosts = () => {
 
       if (response.ok) {
         const updated = await response.json();
-        // Fix image URL to include full backend URL
         if (updated.imageUrl) {
           updated.imageUrl = `http://localhost:5001${updated.imageUrl}`;
         }
