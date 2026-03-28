@@ -31,7 +31,7 @@ const AddPost = () => {
       setImage(null);
       setImagePreview(null);
       // Redirect to home page after adding post
-      navigate('/');
+      navigate('/home');
     } else {
       alert('Failed to add post. Please try again.');
     }
